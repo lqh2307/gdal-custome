@@ -6,6 +6,8 @@ FROM ${BUILDER_IMAGE} AS builder
 RUN apt-get update -y \
 	&& apt-get upgrade -y \
 	&& apt-get install -y \
+ 		build-essential \
+   		cmake \
 		libproj-dev \
 	&& apt-get -y --purge autoremove \
 	&& apt-get clean \
