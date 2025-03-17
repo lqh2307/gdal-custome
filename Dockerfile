@@ -1,5 +1,5 @@
-ARG BUILDER_IMAGE=debian:bookworm
-ARG TARGET_IMAGE=debian:bookworm
+ARG BUILDER_IMAGE=ubuntu:22.04
+ARG TARGET_IMAGE=ubuntu:22.04
 
 FROM ${BUILDER_IMAGE} AS builder
 
@@ -29,7 +29,7 @@ FROM ${TARGET_IMAGE} AS final
 
 RUN apt-get update -y \
 	&& apt-get install -y \
-		libproj22 \
+		libproj25 \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
 
