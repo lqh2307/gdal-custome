@@ -19,9 +19,9 @@ RUN apt-get update -y \
 
 ADD . .
 
-RUN tar -xzf ./${GDAL_VERSION}.tar.gz \
-	&& rm -rf ./${GDAL_VERSION}.tar.gz \
-	&& cd ./${GDAL_VERSION} \
+RUN tar -xzf ./gdal-${GDAL_VERSION}.tar.gz \
+	&& rm -rf ./gdal-${GDAL_VERSION}.tar.gz \
+	&& cd ./gdal-${GDAL_VERSION} \
 	&& mkdir -p build \
 	&& cd build \
 	&& cmake .. -DCMAKE_BUILD_TYPE=Release \
