@@ -1,7 +1,11 @@
 ARG BUILDER_IMAGE=ubuntu:24.04
 ARG TARGET_IMAGE=ubuntu:24.04
+# ARG BUILDER_IMAGE=debian:bookworm
+# ARG TARGET_IMAGE=debian:bookworm
 
 FROM ${BUILDER_IMAGE} AS builder
+
+ARG GDAL_VERSION=3.10.2
 
 RUN apt-get update -y \
 	&& apt-get upgrade -y \
@@ -15,16 +19,14 @@ RUN apt-get update -y \
 
 ADD . .
 
-RUN tar -xzf ./gdal-3.10.2.tar.gz \
-	&& rm -rf ./gdal-3.10.2.tar.gz \
-	&& cd ./gdal-3.10.2 \
+RUN tar -xzf ./${GDAL_VERSION}.tar.gz \
+	&& rm -rf ./${GDAL_VERSION}.tar.gz \
+	&& cd ./${GDAL_VERSION} \
 	&& mkdir -p build \
 	&& cd build \
 	&& cmake .. -DCMAKE_BUILD_TYPE=Release \
 	&& cmake --build . \
 	&& cmake --build . --target install
-
-RUN ldconfig
 
 
 FROM ${TARGET_IMAGE} AS final
@@ -32,6 +34,8 @@ FROM ${TARGET_IMAGE} AS final
 RUN apt-get update -y \
 	&& apt-get install -y \
 		libproj25 \
+		osmosis \
+	&& apt-get -y --purge autoremove \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
 
