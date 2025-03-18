@@ -41,9 +41,4 @@ RUN apt-get update -y \
 
 COPY --from=builder /usr/local /usr/local
 
-RUN ldconfig
-
 WORKDIR /data
-VOLUME /data
-
-CMD ["gdalinfo", "--version"]
