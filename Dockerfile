@@ -11,7 +11,7 @@ RUN apt-get update -y \
 	&& apt-get upgrade -y \
 	&& apt-get install -y \
  		build-essential \
-   		cmake \
+		cmake \
 		libproj-dev \
 	&& apt-get -y --purge autoremove \
 	&& apt-get clean \
@@ -41,5 +41,7 @@ RUN apt-get update -y \
 	&& rm -rf /var/lib/apt/lists/*
 
 COPY --from=builder /usr/local /usr/local
+
+RUN ldconfig
 
 VOLUME /data
