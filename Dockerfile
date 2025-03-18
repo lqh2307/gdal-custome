@@ -20,13 +20,14 @@ RUN apt-get update -y \
 ADD . .
 
 RUN tar -xzf ./gdal-${GDAL_VERSION}.tar.gz \
-	&& rm -rf ./gdal-${GDAL_VERSION}.tar.gz \
 	&& cd ./gdal-${GDAL_VERSION} \
 	&& mkdir -p build \
 	&& cd build \
 	&& cmake .. -DCMAKE_BUILD_TYPE=Release \
 	&& cmake --build . \
-	&& cmake --build . --target install
+	&& cmake --build . --target install \
+ 	&& cd ../.. \
+ 	&& rm -rf ./gdal-${GDAL_VERSION}*
 
 
 FROM ${TARGET_IMAGE} AS final
