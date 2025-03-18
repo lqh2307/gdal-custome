@@ -41,4 +41,4 @@ RUN apt-get update -y \
 
 COPY --from=builder /usr/local /usr/local
 
-WORKDIR /data
+VOLUME /data
