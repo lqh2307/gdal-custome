@@ -1,2 +1,2 @@
 # gdal-custom
-GDAL custome
+GDAL 3.11.0 custome
