@@ -6,6 +6,7 @@ ARG TARGET_IMAGE=ubuntu:24.04
 FROM ${BUILDER_IMAGE} AS builder
 
 ARG GDAL_VERSION=3.11.0
+ARG PREFIX_DIR=/usr/local/opt
 
 RUN apt-get update -y \
 	&& apt-get upgrade -y \
@@ -33,9 +34,8 @@ RUN tar -xzf ./gdal-${GDAL_VERSION}.tar.gz \
 	&& cd build \
 	&& cmake .. \
 		-DCMAKE_BUILD_TYPE=Release \
-		-DCMAKE_INSTALL_RPATH=/usr/local/opt/gdal \
-		-DCMAKE_INSTALL_PREFIX=/usr/local/opt/gdal \
-		-DCMAKE_INSTALL_LIBDIR=/usr/local/opt/gdal \
+    -DCMAKE_INSTALL_RPATH='$ORIGIN/../lib' \
+		-DCMAKE_INSTALL_PREFIX=${PREFIX_DIR}/gdal \
 	&& cmake --build . \
 	&& cmake --build . --target install \
  	&& cd ../.. \
@@ -43,6 +43,8 @@ RUN tar -xzf ./gdal-${GDAL_VERSION}.tar.gz \
 
 
 FROM ${TARGET_IMAGE} AS final
+
+ARG PREFIX_DIR=/usr/local/opt
 
 # # ubuntu 22.04
 # RUN apt-get update -y \
@@ -93,6 +95,6 @@ RUN apt-get update -y \
 # 	&& apt-get clean \
 # 	&& rm -rf /var/lib/apt/lists/*
 
-COPY --from=builder /usr/local/opt /usr/local/opt
+COPY --from=builder ${PREFIX_DIR} ${PREFIX_DIR}
 
-ENV PATH=/usr/local/opt/gdal/bin:${PATH}
+ENV PATH=${PREFIX_DIR}/gdal/bin:${PATH}
