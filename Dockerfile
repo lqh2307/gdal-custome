@@ -5,7 +5,7 @@ ARG TARGET_IMAGE=ubuntu:24.04
 
 FROM ${BUILDER_IMAGE} AS builder
 
-ARG GDAL_VERSION=3.11.0
+ARG GDAL_VERSION=3.11.3
 ARG PREFIX_DIR=/usr/local/opt
 
 RUN apt-get update -y \
