@@ -36,7 +36,7 @@ RUN tar -xzf ./gdal-${GDAL_VERSION}.tar.gz \
 		-DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_RPATH='$ORIGIN/../lib' \
 		-DCMAKE_INSTALL_PREFIX=${PREFIX_DIR}/gdal \
-	&& cmake --build . \
+	&& cmake --build . --parallel $(nproc) \
 	&& cmake --build . --target install \
  	&& cd ../.. \
  	&& rm -rf ./gdal-${GDAL_VERSION}*
