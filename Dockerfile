@@ -8,7 +8,7 @@ FROM ${BUILDER_IMAGE} AS builder
 ARG GDAL_VERSION=3.11.3
 ARG PREFIX_DIR=/usr/local/opt
 
-RUN apt-get update -y \
+RUN DEBIAN_FRONTEND=noninteractive apt-get update -y \
 	&& apt-get upgrade -y \
 	&& apt-get install -y \
  		build-essential \
@@ -47,7 +47,7 @@ FROM ${TARGET_IMAGE} AS final
 ARG PREFIX_DIR=/usr/local/opt
 
 # # ubuntu 22.04
-# RUN apt-get update -y \
+# RUN DEBIAN_FRONTEND=noninteractive apt-get update -y \
 # 	&& apt-get install -y \
 # 		libproj22 \
 # 		libsqlite3-0 \
@@ -63,7 +63,7 @@ ARG PREFIX_DIR=/usr/local/opt
 # 	&& rm -rf /var/lib/apt/lists/*
 
 # ubuntu 24.04
-RUN apt-get update -y \
+RUN DEBIAN_FRONTEND=noninteractive apt-get update -y \
 	&& apt-get install -y \
 		libproj25 \
 		libsqlite3-0 \
@@ -79,7 +79,7 @@ RUN apt-get update -y \
 	&& rm -rf /var/lib/apt/lists/*
 
 # # ubuntu 24.04 - osmosis
-# RUN apt-get update -y \
+# RUN DEBIAN_FRONTEND=noninteractive apt-get update -y \
 # 	&& apt-get install -y \
 # 		libproj25 \
 # 		osmosis \
