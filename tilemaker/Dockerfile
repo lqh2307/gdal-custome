@@ -34,7 +34,6 @@ RUN tar -xzf ./tilemaker.tar.gz \
     -DCMAKE_INSTALL_PREFIX=${PREFIX_DIR}/tilemaker \
   && cmake --build . --parallel $(nproc) \
   && cmake --build . --target install \
-  && cp -r ../resources ${PREFIX_DIR}/tilemaker \
   && cd ../.. \
   && rm -rf ./tilemaker*
 
