@@ -1,7 +1,7 @@
-# ARG BUILDER_IMAGE=ubuntu:22.04
-# ARG TARGET_IMAGE=ubuntu:22.04
-ARG BUILDER_IMAGE=ubuntu:24.04
-ARG TARGET_IMAGE=ubuntu:24.04
+ARG BUILDER_IMAGE=ubuntu:22.04
+ARG TARGET_IMAGE=ubuntu:22.04
+# ARG BUILDER_IMAGE=ubuntu:24.04
+# ARG TARGET_IMAGE=ubuntu:24.04
 
 FROM ${BUILDER_IMAGE} AS builder
 
@@ -25,7 +25,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update -y \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
 
-ADD . .
+COPY ./gdal.tar.gz .
 
 RUN tar -xzf ./gdal.tar.gz \
 	&& cd ./gdal \
@@ -45,43 +45,26 @@ FROM ${TARGET_IMAGE} AS final
 
 ARG PREFIX_DIR=/usr/local/opt
 
-# # ubuntu 22.04
-# RUN DEBIAN_FRONTEND=noninteractive apt-get update -y \
-# 	&& apt-get install -y \
-# 		libproj22 \
-# 		libsqlite3-0 \
-# 		librasterlite2-1 \
-# 		libspatialite7 \
-# 		libpng16-16 \
-# 		libjpeg-turbo8 \
-# 		libgif7 \
-# 		libwebp7 \
-# 		libtiff5 \
-# 	&& apt-get -y --purge autoremove \
-# 	&& apt-get clean \
-# 	&& rm -rf /var/lib/apt/lists/*
-
-# ubuntu 24.04
+# ubuntu 22.04
 RUN DEBIAN_FRONTEND=noninteractive apt-get update -y \
 	&& apt-get install -y \
-		libproj25 \
+		libproj22 \
 		libsqlite3-0 \
 		librasterlite2-1 \
-		libspatialite8 \
+		libspatialite7 \
 		libpng16-16 \
 		libjpeg-turbo8 \
 		libgif7 \
 		libwebp7 \
-		libtiff6 \
+		libtiff5 \
 	&& apt-get -y --purge autoremove \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
 
-# # ubuntu 24.04 - osmosis
+# ubuntu 24.04
 # RUN DEBIAN_FRONTEND=noninteractive apt-get update -y \
 # 	&& apt-get install -y \
 # 		libproj25 \
-# 		osmosis \
 # 		libsqlite3-0 \
 # 		librasterlite2-1 \
 # 		libspatialite8 \
