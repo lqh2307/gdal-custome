@@ -58,3 +58,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update -y \
 COPY --from=builder ${PREFIX_DIR} ${PREFIX_DIR}
 
 ENV PATH=${PREFIX_DIR}/tilemaker/bin:${PATH}
+
+VOLUME /data
+
+WORKDIR /data
