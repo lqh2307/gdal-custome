@@ -133,6 +133,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update -y \
 		zlib1g \
 		liblz4-1 \
 		libexpat1 \
+		osmosis \
     libproj25 \
 		librasterlite2-1 \
 		libspatialite8 \
