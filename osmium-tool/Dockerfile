@@ -23,7 +23,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update -y \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
 
-COPY ./osmium-tool/osmium-tool.tar.gz .
+COPY ./osmium-tool.tar.gz .
 
 RUN tar -xzf ./osmium-tool.tar.gz \
 	&& cd ./osmium-tool \
