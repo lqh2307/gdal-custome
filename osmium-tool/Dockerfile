@@ -1,5 +1,7 @@
-ARG BUILDER_IMAGE=ubuntu:24.04
-ARG TARGET_IMAGE=ubuntu:24.04
+ARG BUILDER_IMAGE=ubuntu:22.04
+ARG TARGET_IMAGE=ubuntu:22.04
+# ARG BUILDER_IMAGE=ubuntu:24.04
+# ARG TARGET_IMAGE=ubuntu:24.04
 
 FROM ${BUILDER_IMAGE} AS osmium-tool-builder
 
@@ -10,15 +12,15 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update -y \
 	&& apt-get install -y \
       build-essential \
       cmake \
+			libosmium2-dev \
+			libprotozero-dev \
 			nlohmann-json3-dev \
 			libboost-program-options-dev \
 			libbz2-dev \
 			zlib1g-dev \
-			libexpat1-dev \
 			liblz4-dev \
-			libosmium2-dev \
-			libprotozero-dev \
-  && luarocks install luaflock \
+			libexpat1-dev \
+			pandoc \
 	&& apt-get -y --purge autoremove \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
@@ -42,19 +44,35 @@ FROM ${TARGET_IMAGE} AS final
 
 ARG PREFIX_DIR=/usr/local/opt
 
+# ubuntu 22.04
 RUN DEBIAN_FRONTEND=noninteractive apt-get update -y \
 	&& apt-get install -y \
+		libosmium2-dev \
+		libprotozero-dev \
 		nlohmann-json3-dev \
-    libboost-program-options1.83.0 \
+		libboost-program-options1.74.0 \
 		libbz2-1.0 \
 		zlib1g \
-		libexpat1 \
 		liblz4-1 \
-		libosmium2-2 \
-		libprotozero0 \
+		libexpat1 \
 	&& apt-get -y --purge autoremove \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
+
+# ubuntu 24.04
+# RUN DEBIAN_FRONTEND=noninteractive apt-get update -y \
+# 	&& apt-get install -y \
+# 		libosmium2-dev \
+# 		libprotozero-dev \
+# 		nlohmann-json3-dev \
+# 		libboost-program-options1.83.0 \
+# 		libbz2-1.0 \
+# 		zlib1g \
+# 		liblz4-1 \
+# 		libexpat1 \
+# 	&& apt-get -y --purge autoremove \
+# 	&& apt-get clean \
+# 	&& rm -rf /var/lib/apt/lists/*
 
 COPY --from=osmium-tool-builder ${PREFIX_DIR} ${PREFIX_DIR}
 
