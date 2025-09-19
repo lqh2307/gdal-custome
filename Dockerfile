@@ -134,7 +134,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update -y \
 		liblz4-1 \
 		libexpat1 \
 		osmosis \
-    libproj25 \
+  		libproj25 \
 		librasterlite2-1 \
 		libspatialite8 \
 		libpng16-16 \
