@@ -3,7 +3,7 @@ ARG TARGET_IMAGE=ubuntu:22.04
 # ARG BUILDER_IMAGE=ubuntu:24.04
 # ARG TARGET_IMAGE=ubuntu:24.04
 
-FROM ${BUILDER_IMAGE} AS osmium-tool-builder
+FROM ${BUILDER_IMAGE} AS builder
 
 ARG PREFIX_DIR=/usr/local/opt
 
@@ -74,7 +74,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update -y \
 # 	&& apt-get clean \
 # 	&& rm -rf /var/lib/apt/lists/*
 
-COPY --from=osmium-tool-builder ${PREFIX_DIR} ${PREFIX_DIR}
+COPY --from=builder ${PREFIX_DIR} ${PREFIX_DIR}
 
 ENV PATH=${PREFIX_DIR}/osmium-tool/bin:${PATH}
 
